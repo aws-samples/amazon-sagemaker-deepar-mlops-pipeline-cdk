@@ -1,5 +1,5 @@
 {
-  "name": "deepar-mlops-pipeline-cdk",
+  "name": "@aws-samples/deepar-mlops-pipeline-cdk",
   "version": "0.1.0",
   "bin": {
     "deepar-mlops-pipeline-cdk": "bin/deepar-mlops-pipeline-cdk.js"
