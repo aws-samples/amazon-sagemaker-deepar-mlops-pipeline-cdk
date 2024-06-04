@@ -78,7 +78,7 @@ The pipeline execution starts with the Lambda function named `DeepAR-MLOps-Pipel
 Now, upload the dataset .zip file to execute this Lambda function and launch the MLOps Pipeline.
 
 ```bash
-aws s3 cp LD2011_2014.txt.zip s3://deepar-mlops-pipeline-resource-{YOUR-12DIGIT-AWS-ACCOUNT-ID}/raw
+aws s3 cp LD2011_2014.txt.zip s3://deepar-mlops-pipeline-resource-{YOUR-12DIGIT-AWS-ACCOUNT-ID}/raw/LD2011_2014.txt.zip
 ```
 
 Navigate to the StepFunctions console to monitor the execution. You will see the progress like below while execution.
