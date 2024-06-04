@@ -48,7 +48,7 @@ export class TriggerConstruct extends Construct {
 				code: lambda.Code.fromAsset('lambda/trigger'),
 				handler: 'index.handler',
                 functionName: `DeepAR-MLOps-Pipeline-Upload-Trigger`,
-				runtime: lambda.Runtime.PYTHON_3_7,
+				runtime: lambda.Runtime.PYTHON_3_12,
 				role: this.role,
 				environment: {
 					STEP_FUNCTIONS_ARN: props.stateMachine.stateMachineArn,

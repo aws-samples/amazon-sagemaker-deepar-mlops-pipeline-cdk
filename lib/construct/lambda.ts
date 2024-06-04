@@ -50,7 +50,7 @@ export class LambdaConstruct extends Construct {
 				code: lambda.Code.fromAsset(props.lambdaCodePath),
 				handler: 'index.handler',
                 functionName: props.taskName,
-				runtime: lambda.Runtime.PYTHON_3_7,
+				runtime: lambda.Runtime.PYTHON_3_12,
                 timeout: props.timeout,
 				role: this.role,
                 environment: props.environment,

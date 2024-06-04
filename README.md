@@ -12,12 +12,12 @@ See [this page](https://docs.aws.amazon.com/cdk/v2/guide/work-with.html) to inst
 
 ![architecture](asset/architecture.png)
 
-This CDK application will deploy a MLOps Pipeline for SageMaker Built-in DeepAR. The pipeline automatically performs preprocessing, model training, model creation, batch transformation, and post processing. This is common process for building a ML model for timeseries forecasting, and the MLOps pipeline created by this CDK application automates it.Each of these operations are implemented and orchestrated with AWS Step Functions.
+This CDK application will deploy a MLOps Pipeline for SageMaker Built-in DeepAR. The pipeline automatically performs preprocessing, model training, model creation, batch transformation, and post-processing. This is common process for building a ML model for time series forecasting, and the MLOps pipeline created by this CDK application automates it.Each of these operations are implemented and orchestrated with AWS Step Functions.
 
 The pipeline consist of the following steps:
 
 ### Preprocess Step
-Implemented in Glue Python Job. Performs data operations defined in the python script __glue/preprocess.py__. It downloads the dataset .zip from the resource bucekt, and then process it to train a DeepAR model. The current code contains preprocessing logic for the sample dataset explained above. The script applies same data manipulation defined in the sample notebook. 
+Implemented in Glue Python Job. Performs data operations defined in the python script __glue/preprocess.py__. It downloads the dataset .zip from the resource bucket, and then process it to train a DeepAR model. The current code contains preprocessing logic for the sample dataset explained above. The script applies same data manipulation defined in the sample notebook. 
 For your own dataset, you can implement your own preprocessing script using pandas, NumPy, sklearn, etc. 
 
 ### Train Step
@@ -28,15 +28,15 @@ Your may have to change training instance type, training hyperparameters and Sag
 
 If you want to use different instance type for your training job, please fix it. 
 
-If you are running this pipeline in other region than ap-norteast-2, you have to set SageMaker DeepAR Image URI to a right value, since [SageMaker DeepAR Image URI] can differ. You can find out the list of SageMaker DeepAR Image URIs [here](https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-algo-docker-registry-paths.html). 
+A default region map of SageMaker DeepAR image URIs to accounts has been provided in the `state-machine.ts` construct. If your desired region code is not listed, manually add the mapping yourself. More information is located [here](https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-algo-docker-registry-paths.html).
 
-If you have your own hyperparamert set for your own dataset, please change them as well.
+If you have your own hyperparameters set for your own dataset, please change them as well.
 
 ### Create Model Step
 Creates a SageMaker Model from the model artifacts (which contains weights, model meta data) created from the __Train Step__.
 
 ### Transform Step
-Creates a SageMaker Bratch Transformation Job with the trained model to infer future time series. 
+Creates a SageMaker Batch Transformation Job with the trained model to infer future time series. 
 
 If you want to use different instance type for your batch transformation job, please fix it. 
 
@@ -49,10 +49,11 @@ Just like preprocess step, you can add your own postprocessing logic in this ste
 ## How to Run
 > Note, this part explains how to run the pipeline with [the sample dataset](https://archive.ics.uci.edu/ml/datasets/ElectricityLoadDiagrams20112014) introduced above. 
 
-### Dataset Prepration
+### Dataset Preparation
 You can download the sample dataset by executing the script given in this project like below.
 ```bash
 cd sample-data
+pip install -r requirements.txt
 python download.py
 ```
 
@@ -77,10 +78,10 @@ The pipeline execution starts with the Lambda function named `DeepAR-MLOps-Pipel
 Now, upload the dataset .zip file to execute this Lambda function and launch the MLOps Pipeline.
 
 ```bash
-aws s3 cp LD2011_2014.txt.zip s3://deepar-mlops-pipeline-resource-{YOUR-12DIGIT-AWS-ACCOUNT-ID}/raw
+aws s3 cp LD2011_2014.txt.zip s3://deepar-mlops-pipeline-resource-{YOUR-12DIGIT-AWS-ACCOUNT-ID}/raw/LD2011_2014.txt.zip
 ```
 
-Navigate to the StepFunctions console to monitor the excecution. You will see the progress like below while execution.
+Navigate to the StepFunctions console to monitor the execution. You will see the progress like below while execution.
 
 ![progress](asset/progress.png)
 
@@ -90,7 +91,7 @@ When all the steps are completed, the resource bucket will have the following st
 raw/                    # Where you uploaded the raw dataset
 json/                   # Where preprocessed json files for SageMaker Built-in DeepAR are stored
 model/                  # Where SageMaker model artifacts (weights, model metadata, etc.) generated after training are stored
-forecast/               # Where csv files that has future forcast values are stored
+forecast/               # Where csv files that has future forecast values are stored
 ```
 
 ## Project Structure
@@ -104,7 +105,7 @@ glue/                   # Python scripts for Glue Jobs
 ```
 
 ## Next Steps
-Customize this pipeline by implementing your own preprocessing/postprocessing steps with your own dataset. And don't forget to change the hyperparameters and SageMaker DeepAR Image URIs for your own enviroment!
+Customize this pipeline by implementing your own preprocessing/postprocessing steps with your own dataset. And don't forget to change the hyperparameters and SageMaker DeepAR Image URIs for your own environment!
 
 ## 👀 Got Problems?
 
