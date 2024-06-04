@@ -26,6 +26,7 @@ export class DeeparMlopsPipelineCdkStack extends cdk.Stack {
             this, 'MLOpsPiplineStateMachine', 
             {
                 resourceBucket: resourceBucket,
+                region: props?.env?.region!
             }
         );
     }

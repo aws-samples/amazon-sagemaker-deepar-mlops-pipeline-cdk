@@ -28,7 +28,7 @@ Your may have to change training instance type, training hyperparameters and Sag
 
 If you want to use different instance type for your training job, please fix it. 
 
-If you are running this pipeline in other region than ap-northeast-2, you have to set SageMaker DeepAR Image URI to a right value, since [SageMaker DeepAR Image URI] can differ. You can find out the list of SageMaker DeepAR Image URIs [here](https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-algo-docker-registry-paths.html). 
+A default region map of SageMaker DeepAR image URIs to accounts has been provided in the `state-machine.ts` construct. If your desired region code is not listed, manually add the mapping yourself. More information is located [here](https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-algo-docker-registry-paths.html).
 
 If you have your own hyperparameters set for your own dataset, please change them as well.
 
